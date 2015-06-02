@@ -1,0 +1,213 @@
+﻿
+
+<div id="map-canvas"></div>
+@*<div id="mode">
+        <input type="radio" name="clickmode" value="client" checked="checked"/> <span style="color: greenyellow;">Klient</span> <br/>
+        <input type="radio" name="clickmode" value="depot"/> <span style="color: red;">Depozyt</span>
+        <button id="calcBtn" >Wyznacz trase</button>
+        @using (Html.BeginForm(null, null, FormMethod.Post, new {id = "fileUploadForm"}))
+        {
+            <input type="file" id="files" name="files[]" multiple/>
+        }
+
+    </div>*@
+<div class="block bg-lighterBlue" style="top: 200px; right: 20px; position: fixed;">
+    <div class="padding20">
+        Depozyt
+        <label class="switch-original">
+            <input id="markerMode" type="checkbox">
+            <span class="check"></span>
+        </label>
+        Klient
+        <br />
+        <div class="margin10"></div>
+        <button id="calcBtn" class="button danger block-shadow-danger text-shadow">
+            Wyznacz trase
+            <span class="icon mif-compass"></span>
+        </button>
+        <div class="margin10"></div>
+        <button id="showSettingBtn" class="button success block-shadow-success text-shadow" onclick=" showDialog('#dialog') ">
+            Ustawienia
+            <span class="icon mif-tools"></span>
+        </button>
+        <div class="margin10"></div>
+        <button id="toogleGenerationButton" class="button primary text-shadow" onclick=" showDialog('#generateDialog') ">
+            Generuj
+            <span class="icon mif-power"></span>
+        </button>
+    </div>
+</div>
+
+<div data-role="dialog" id="generateDialog" class="padding20" data-close-button="true" data-type="info">
+    <h1>Ile punktów wygenerować?</h1>
+    <h3>Po wpisaniu liczby punktów do wygenerowania narysuj prostokąt.</h3>
+    <div class="input-control text">
+        <form id="generationForm">
+            <div class="input-control text" data-role="input">
+                <input type="text" id="pointsNumberToGenerateInput">
+                <button class="button" type="submit"><span class="mif-power"></span></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div data-role="dialog" id="dialog" class="padding20 dialog" data-close-button="true" data-type="success" style="position: fixed; transform: translate(-50%, -50%); background-color: #138023;">
+    <div class="grid">
+        <div class="row cells3">
+            <div class="cell"></div>
+            <div class="cell"><h1>Ustawienia</h1></div>
+            <div class="cell"></div>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="row cells2">
+            <div class="cell">
+                <div>
+                    <label class="input-control radio">
+                        <input type="radio" name="clickmode" checked="" value="client">
+                        <span class="check"></span>
+                        <span class="caption">Klient</span>
+                    </label>
+                </div>
+                <div>
+                    <label class="input-control radio">
+                        <input type="radio" name="clickmode" checked="" value="depot">
+                        <span class="check"></span>
+                        <span class="caption">Depozyt</span>
+                    </label>
+                </div>
+                <div>
+                    <label>Wybierz plik do wczytania</label>
+                    <div class="input-control file" data-role="input" style="width: 100%;">
+                        <input id="files" name="files[]" type="file">
+                        <button class="button"><span class="mif-folder"></span></button>
+                    </div>
+                </div>
+                <div>
+                    @using (Html.BeginForm("ExportPoints", "File", FormMethod.Post, new { Id = "exPointsForm", enctype = "application/json" }))
+                    {
+                        <input type="hidden" id="exportedPoints" name="points" data-type="JSON" />
+                        <button type="button" id="exportBtn" class="button">
+                            Eksportuj do pliku
+                        </button>
+                    }
+                </div>
+            </div>
+            <div class="cell">
+                <h3>Czas na obliczenia</h3>
+                <div class="input-control modern text iconic">
+                    <input type="text" id="timeComputing">
+                    <span class="label">Czas po którym</span>
+                    <span class="informer">zakoncza sie obliczenia</span>
+                    <span class="icon mif-calculator"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div>
+            <button id="calcBtn" class="command-button icon-right warning block" style="left: 50%; transform: translate(-50%, 0%);">
+                <span class="icon mif-share"></span>
+                Wyznacz trase
+                <small>Oblicz na serwerze najlepsza trasę przejazdu</small>
+            </button>
+        </div>*@
+
+    <span class="dialog-close-button"></span>
+</div>
+
+<div style="position: fixed; bottom: 0px; left: 50%; transform: translate(-50%, 0%); width: 400px;">
+    <input id="slider_component" style="margin-bottom: 12px;" type="range" name="points" min="1" max="0">
+    <div class="input-control text" style="margin-left: auto; margin-right: auto; width: 100px; display: block;">
+        <input id="slider_input" type="number" min="1" max="0" style="text-align: center;" value="1">
+    </div>
+</div>
+
+<div id="directPanel" style="position: fixed; height: 56%; width: 23%; left: 0px; top: 40%; display: none;">
+    <span id="showHide" data-mode="show" class="button primary" style="width: 100%; text-align: center;">
+        <span id="showHideContent">Ukryj</span>
+        <small id="showHideIcon" class="icon mif-arrow-down"></small>
+    </span>
+    <div id="directions-panel" style="height: 100%; overflow: auto;">
+
+    </div>
+</div>
+
+<div id="spinner" style="position: fixed; transform: translate(-50%, -50%); top:50%; left: 50%; display: none;">
+    <button class="button big-button block-shadow warning loading-cube lighten">Mrówki wyznaczają dla Ciebie trase</button>
+</div>
+
+
+@*@Scripts.Render("~/bundles/mapScript")*@
+<script src="../../Scripts/filesScript.js"></script>
+<script src="../../Scripts/RouteDrawer.js"></script>
+<script src="../../Scripts/mapScript.js"></script>
+<script src="../../Scripts/pageScript.js"></script>
+
+
+<script>
+    var getPointsAction = '@Url.Action("GetPoints", "File")';
+    var exportPointsAction = '@Url.Action("ExportPoints", "File")';
+</script>
+
+@section Scripts{
+    <script>
+
+        var semaphore = 0;
+
+        var routesDr = [];
+
+        $(function () {
+            var dvrpRouteHub = $.connection.dvrpRouteHub;
+            dvrpRouteHub.client.sendMessage = function (number, route) {
+                console.log("signalR");
+                console.log(route);
+
+                var pointResult = [];
+
+                for (var i = 0; i < route.length; i++) {
+                    pointResult.push(new window.google.maps.LatLng(points[route[i]].Lat, points[route[i]].Lng));
+                }
+
+                var drawer = new RouteDrawer(pointResult, routesDr.length + 1);
+                if (routesDr.length === 0) {
+                    drawer.CallbackAfterDetermine = function () {
+                        routesDr[0].draw();
+                        newRouteOccured();
+                        showNotify();
+                    };
+                    routesDr.push(drawer);
+                    drawer.determineRoute();
+                } else {
+                    drawer.CallbackAfterDetermine = function () {
+                        newRouteOccured();
+                        showNotify();
+                    }
+
+                    if (routesDr[routesDr.length - 1].RouteIsReady) {
+                        routesDr.push(drawer);
+                        drawer.determineRoute();
+                    } else {
+                        routesDr[routesDr.length - 1].Callback = function () {
+                            drawer.determineRoute.call(drawer);
+                        };
+                        routesDr.push(drawer);
+                    }
+                }
+            };
+
+            $.connection.hub.start().done(function () {
+               
+            });
+
+            $('#calcBtn').click(function () {
+                if (!validatePoints(points)) return;
+
+                var timeComputing = $('#timeComputing').val();
+
+                $('#spinner').css('display','block');
+                dvrpRouteHub.server.sendProblem(JSON.stringify({ 'points': points, 'time': timeComputing }));
+            });
+        });
+    </script>
+}
+

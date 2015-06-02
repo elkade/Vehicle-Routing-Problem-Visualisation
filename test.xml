@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPoint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Point>
+    <Lat>52.2</Lat>
+    <Lng>21</Lng>
+    <Type>Client</Type>
+    <Capacity>1</Capacity>
+    <OccurTime>2015-05-04T16:25:32.1457472+02:00</OccurTime>
+    <UnloadTime>1</UnloadTime>
+  </Point>
+  <Point>
+    <Lat>52.3</Lat>
+    <Lng>21</Lng>
+    <Type>Client</Type>
+    <Capacity>1</Capacity>
+    <OccurTime>2015-05-04T16:25:32.1457472+02:00</OccurTime>
+    <UnloadTime>2</UnloadTime>
+  </Point>
+</ArrayOfPoint>

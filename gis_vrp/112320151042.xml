@@ -1,0 +1,18 @@
+<ArrayOfPoint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Point>
+    <Lat>52.2230149887391</Lat>
+    <Lng>21.006932258605957</Lng>
+    <Type>Depot</Type>
+    <Capacity>40</Capacity>
+    <OccurTime>2015-01-01T00:00:00</OccurTime>
+    <UnloadTime>12</UnloadTime>
+  </Point>
+  <Point>
+    <Lat>52.223028133484114</Lat>
+    <Lng>21.01560115814209</Lng>
+    <Type>Depot</Type>
+    <Capacity>40</Capacity>
+    <OccurTime>2015-01-01T00:00:00</OccurTime>
+    <UnloadTime>12</UnloadTime>
+  </Point>
+</ArrayOfPoint>

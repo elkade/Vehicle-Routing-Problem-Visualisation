@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIS</title>
+
+    @Styles.Render("~/bundles/styles")
+    @Styles.Render("~/bundles/css/metro")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/js/metro")
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxaRXv2wr70PLe90vBECYIf4ZHyj79yfI&sensor=false&libraries=drawing"></script>
+
+
+</head>
+<body>
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/signalR")
+    @Scripts.Render("/signalr/hubs")
+    @RenderSection("Scripts", false)
+</body>
+</html>
